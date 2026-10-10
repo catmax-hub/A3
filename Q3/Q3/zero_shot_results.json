@@ -1,0 +1,35 @@
+ Loading weights: 100% 515/515 [00:00<00:00, 2342.79it/s][
+  {
+    "input_message": "There is a water leak in Building C that has been running all morning.",
+    "issue_category": "Environmental - Facilities",
+    "category_confidence": 0.3294,
+    "urgency": "MEDIUM",
+    "urgency_confidence": 0.2902,
+    "followup_required": false,
+    "followup_action": null,
+    "escalation_reason": null,
+    "brief_summary": null
+  },
+  {
+    "input_message": "I want to report that one of our suppliers may not meet our sustainability policy.",
+    "issue_category": "Governance - Procurement Compliance",
+    "category_confidence": 0.4023,
+    "urgency": "LOW",
+    "urgency_confidence": 0.3651,
+    "followup_required": false,
+    "followup_action": null,
+    "escalation_reason": null,
+    "brief_summary": null
+  },
+  {
+    "input_message": "The accessible entrance near the main building has been blocked for two days.",
+    "issue_category": "Social - Accessibility",
+    "category_confidence": 0.7791,
+    "urgency": "LOW",
+    "urgency_confidence": 0.3051,
+    "followup_required": false,
+    "followup_action": null,
+    "escalation_reason": null,
+    "brief_summary": null
+  }
+]
