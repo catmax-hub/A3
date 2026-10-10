@@ -1,0 +1,81 @@
+# Use the current active model from Groq
+ACTIVE_MODEL = "openai/gpt-oss-120b"  # If unavailable, try "openai/gpt-oss-20b"
+
+REVISED_PROMPT_TEMPLATE = """[ROLE ASSIGNMENT]
+You are a senior ESG digital operations specialist experienced in real-time incident triage and operational classification.
+
+[TASK DESCRIPTION]
+Analyze the operational report provided and extract structured triage metadata. Return valid JSON only with the following fields:
+
+- issue_category: Choose EXACTLY one:
+  ["Environmental - Facilities", "Environmental - Sustainability", "Social - Accessibility", "Social - Health & Safety", "Governance - Procurement Compliance", "Non-ESG / General Operations"]
+- urgency: Choose EXACTLY one based on operational impact:
+  * "CRITICAL": Active hazard to human life, ongoing structural damage, or immediate legal liability.
+  * "HIGH": Blocked accessibility, active resource waste running >2 hours, or vendor compliance breach.
+  * "MEDIUM": Localized operational inefficiency or recurring non-compliance with no active damage.
+  * "LOW": Informational suggestions, visual defects, or routine inquiries.
+- recommended_team: Choose EXACTLY one:
+  ["Facilities Rapid Response", "Sustainability Operations", "Procurement Compliance", "Accessibility & Inclusion", "Corporate Legal"]
+- followup_required: true or false (Boolean).
+- followup_action: Specific immediate task required. If none, return "None".
+- data_sensitivity_risk: Choose EXACTLY one:
+  ["CONFIDENTIAL_WHISTLEBLOWER", "PII_PRESENT", "STANDARD_OPERATIONAL"]
+- escalation_reason: Operational justification if HIGH or CRITICAL; otherwise return "N/A" (max 15 words).
+- brief_summary: Objective description of the event (max 20 words).
+
+[FEW-SHOT EXAMPLES]
+Demonstration 1:
+Message: "One of our apparel suppliers is using unauthorized sub-contractors that fail ethical audit checks."
+Completion:
+{{
+  "issue_category": "Governance - Procurement Compliance",
+  "urgency": "HIGH",
+  "recommended_team": "Procurement Compliance",
+  "followup_required": true,
+  "followup_action": "Initiate vendor audit and place contract renewal on temporary hold.",
+  "data_sensitivity_risk": "CONFIDENTIAL_WHISTLEBLOWER",
+  "escalation_reason": "Breach of ethical supplier code with high legal and reputation exposure.",
+  "brief_summary": "Apparel supplier reported using unauthorized non-compliant subcontractors."
+}}
+
+Demonstration 2:
+Message: "The automatic door at the wheelchair ramp entrance has been turned off since yesterday."
+Completion:
+{{
+  "issue_category": "Social - Accessibility",
+  "urgency": "HIGH",
+  "recommended_team": "Accessibility & Inclusion",
+  "followup_required": true,
+  "followup_action": "Dispatch emergency technician to restore automated door sensor.",
+  "data_sensitivity_risk": "STANDARD_OPERATIONAL",
+  "escalation_reason": "Barrier preventing equitable mobility access for more than 24 hours.",
+  "brief_summary": "Wheelchair ramp automatic entrance door powered off since yesterday."
+}}
+
+[INPUT MESSAGE]
+Message: "{message_text}"
+
+[COMPLETION]"""
+
+sample_messages = [
+    "There is a water leak in Building C that has been running all morning.",
+    "I want to report that one of our suppliers may not meet our sustainability policy.",
+    "The accessible entrance near the main building has been blocked for two days."
+]
+
+for idx, message in enumerate(sample_messages, 1):
+    print(f"\n{'='*70}")
+    print(f"MESSAGE {idx}: \"{message}\"")
+    print(f"{'='*70}")
+
+    response = client.chat.completions.create(
+        model=ACTIVE_MODEL,
+        messages=[
+            {"role": "user", "content": REVISED_PROMPT_TEMPLATE.format(message_text=message)}
+        ],
+        temperature=0.0,
+        response_format={"type": "json_object"}
+    )
+
+    parsed = json.loads(response.choices[0].message.content)
+    print(json.dumps(parsed, indent=2))
