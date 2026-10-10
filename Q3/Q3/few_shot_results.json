@@ -1,0 +1,42 @@
+
+======================================================================
+MESSAGE 1: "There is a water leak in Building C that has been running all morning."
+======================================================================
+{
+  "issue_category": "Environmental - Facilities",
+  "urgency": "HIGH",
+  "recommended_team": "Facilities Rapid Response",
+  "followup_required": true,
+  "followup_action": "Dispatch maintenance crew to locate and repair leak.",
+  "data_sensitivity_risk": "STANDARD_OPERATIONAL",
+  "escalation_reason": "Ongoing leak causing potential property damage and resource waste.",
+  "brief_summary": "Water leak in Building C observed running continuously since this morning."
+}
+
+======================================================================
+MESSAGE 2: "I want to report that one of our suppliers may not meet our sustainability policy."
+======================================================================
+{
+  "issue_category": "Governance - Procurement Compliance",
+  "urgency": "MEDIUM",
+  "recommended_team": "Procurement Compliance",
+  "followup_required": true,
+  "followup_action": "Conduct sustainability compliance review of the supplier and request documentation.",
+  "data_sensitivity_risk": "STANDARD_OPERATIONAL",
+  "escalation_reason": "N/A",
+  "brief_summary": "Potential supplier non\u2011compliance with company sustainability policy reported."
+}
+
+======================================================================
+MESSAGE 3: "The accessible entrance near the main building has been blocked for two days."
+======================================================================
+{
+  "issue_category": "Social - Accessibility",
+  "urgency": "HIGH",
+  "recommended_team": "Accessibility & Inclusion",
+  "followup_required": true,
+  "followup_action": "Remove obstruction and restore access to entrance",
+  "data_sensitivity_risk": "STANDARD_OPERATIONAL",
+  "escalation_reason": "Barrier denies disabled access for over 48 hours",
+  "brief_summary": "Accessible entrance near main building blocked for two days."
+}
